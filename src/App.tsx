@@ -1,8 +1,7 @@
 import React from 'react'
 // import { Provider } from 'react-redux'
-import * as reactReudx from 'react-redux'
-// import store from './store'
-console.log(reactReudx)
+import store from './store'
+console.log(store)
 
 const App = () => {
   return (

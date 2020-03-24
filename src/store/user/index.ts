@@ -6,16 +6,15 @@ enum types {
 
 const initValue = {}
 
-const model = (initValue, action) => {
+const model = (state = initValue, action) => {
   switch (action.type) {
     case types.CACHE_USER:
-      
-      break;
-  
+      return {
+        ...state
+      }
     default:
-      break;
+      return state
   }
-
 }
 
 export default model
