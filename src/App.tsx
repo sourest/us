@@ -1,15 +1,13 @@
 import React from 'react'
-// import { Provider } from 'react-redux'
+import { Provider } from 'react-redux'
 import store from './store'
-console.log(store)
+import router from './router'
 
 const App = () => {
   return (
-    <div>
-    {/* // <Provider store={store}> */}
-      hello everybody
-    {/* // </Provider> */}
-    </div>
+    <Provider store={store}>
+      {router}
+    </Provider>
   )
 }
 
