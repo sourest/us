@@ -55,17 +55,25 @@ const config = (env = {}, args) => {
       rules: [
         {
           test: /\.tsx?$/,
-
           include: [
             path.resolve(__dirname, 'src')
           ],
-
           use: [
             {
               loader: 'babel-loader',
             }
           ]
-
+        },
+        {
+          test: /\.(png|jpg|svg|gif)$/,
+          include: [
+            path.resolve(__dirname, 'src')
+          ],
+          use: [
+            {
+              loader: 'url-loader',
+            }
+          ]
         },
       ],
     },
