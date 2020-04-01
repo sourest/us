@@ -6,6 +6,4 @@ const root = document.createElement('div')
 
 ReactDom.render(<App />, root)
 
-root.id = 'root'
-
 document.body.appendChild(root)
