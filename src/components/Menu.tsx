@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { layoutZIndex } from '../constants'
 
 const Wrap = styled.div({
   position: 'fixed',
+  zIndex: layoutZIndex.FIXED + 3e2,
   top: 0,
   left: 0,
   right: 0,
   height: 0,
-  // bottom: 0,
-  // overflow: 'hidden',
   userSelect: 'none',
 })
 
@@ -89,11 +89,12 @@ const PullingRopePath2 = styled.path.attrs({
   cursor: 'grabbing',
 })
 
-type MenuItem = {
+export type MenuItem = {
+  id: string | number
   name: string
   path: string
 }
-type NavigationProps = {
+export type NavigationProps = {
   menus: MenuItem[]
 }
 type NavigationState = {
@@ -123,7 +124,6 @@ class Navigation extends PureComponent<NavigationProps, NavigationState> {
   }
 
   onTapPullingRope () {
-    console.log(44)
     const { isNavsVisible } = this.state
 
     this.setState({
@@ -148,7 +148,7 @@ class Navigation extends PureComponent<NavigationProps, NavigationState> {
     }
   }
 
-  onPulling (event) {
+  onPulling (event: MouseEvent | TouchEvent) {
     event.preventDefault()
     const { pullingStartY } = this.state
     const moveY = ~~(event instanceof MouseEvent ? event.clientY : event.touches[0].screenY) - pullingStartY

@@ -13,6 +13,7 @@ const Wrap = styled.div({
 
 const menus = [
   {
+    id: 'goddess festival',
     name: '女神节快乐',
     path: '/album-typewriter'
   }

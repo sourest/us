@@ -22,6 +22,7 @@
     "@types/styled-components": "^5.0.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
     "html-inline-css-webpack-plugin": "^1.8.0",
     "html-webpack-inline-source-plugin": "^0.0.10",
     "html-webpack-plugin": "^4.0.1",

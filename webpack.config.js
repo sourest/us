@@ -87,6 +87,24 @@ const config = (env = {}, args) => {
           use: [
             {
               loader: 'url-loader',
+              options: {
+                limit: 8192
+              }
+            }
+          ]
+        },
+        {
+          test: /\.(mp3)$/,
+          include: [
+            path.resolve(__dirname, 'src')
+          ],
+          use: [
+            {
+              // loader: 'file-loader',
+              loader: 'url-loader',
+              options: {
+                limit: 8192
+              }
             }
           ]
         },
