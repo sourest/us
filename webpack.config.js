@@ -65,6 +65,21 @@ const config = (env = {}, args) => {
           ]
         },
         {
+          test: /\.css/,
+          use: [
+            {
+              loader: 'style-loader',
+              options: {
+                injectType: 'styleTag',
+                insert: 'head'
+              }
+            },
+            {
+              loader: 'css-loader'
+            }
+          ]
+        },
+        {
           test: /\.(png|jpg|svg|gif)$/,
           include: [
             path.resolve(__dirname, 'src')
@@ -81,9 +96,9 @@ const config = (env = {}, args) => {
     performance: {
       hints: 'warning',
       maxEntrypointSize: 204800,
-      assetFilter (assetFilename) {
-        return !(/\.(map|css)$/.test(assetFilename))
-      }
+      // assetFilter (assetFilename) {
+      //   return !(/\.(map|css)$/.test(assetFilename))
+      // }
     },
   
     plugins: [
@@ -95,8 +110,14 @@ const config = (env = {}, args) => {
         minify:{
           removeComments: true,
           collapseWhitespace: true
-        }
-      })
+        },
+        inlineSource: '.css$',
+      }),
+      // new HTMLInlineCSSWebpackPlugin({
+      //   replace: {
+      //     target: '<!-- inline_css_plugin -->'
+      //   }
+      // })
     ],
   }
 }

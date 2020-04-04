@@ -11,11 +11,17 @@ const Wrap = styled.div({
   userSelect: 'none',
 })
 
+const menus = [
+  {
+    name: '女神节快乐',
+    path: '/album-typewriter'
+  }
+]
 
 const router = (
   <Wrap>
     <HashRouter>
-      <Menu />
+      <Menu menus={menus} />
       <Route path="/" component={Home} />
       <Route path="/album-typewriter" component={AlbumTypewriter} />
     </HashRouter>
