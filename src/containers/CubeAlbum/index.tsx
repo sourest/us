@@ -75,7 +75,7 @@ const InnerFace = styled.img.attrs(({ face, size }: BoxFacesProps) => ({
   position: 'absolute',
   objectFit: 'cover',
   transition: 'all .7s',
-  opacity: size === BoxSizes.BIG ? .9 : 1,
+  opacity: size === BoxSizes.BIG ? .8 : 1,
   top: (BOX_SIZE - size) / 2,
   left: (BOX_SIZE - size) / 2,
   width: size,
