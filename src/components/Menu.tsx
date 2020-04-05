@@ -55,23 +55,25 @@ const Menu = styled(Link)({
 const MIN_PULL_LENGTH = 0
 const MAX_PULL_LENGTH = 40
 const pullLengthAverage = (MIN_PULL_LENGTH + MAX_PULL_LENGTH) / 2
-const PullingRope = styled.svg.attrs({
+const PullingRope = styled.svg.attrs<{ moveY: number }>(({ moveY }) => ({
   viewBox: '0 0 200 800',
   version: '1.1',
   xmlns: 'http://www.w3.org/2000/svg',
-})<{ moveY: number }>(({ moveY }) => ({
+  style: {
+    transition: `${moveY ? 0 : 3e2}ms all`,
+    transform: `translate3d(0,${moveY}px,0)`,
+  }
+}))({
   position: 'absolute',
   zIndex: 30,
   top: -MAX_PULL_LENGTH,
   right: 20,
   width: 30,
-  transition: `${moveY ? 0 : 3e2}ms all`,
-  transform: `translate3d(0,${moveY}px,0)`,
   pointerEvents: 'none',
   path: {
     pointerEvents: 'all'
   }
-}))
+})
 
 const PullingRopePath = styled.path.attrs({
   className: 'no-tap-highlight',

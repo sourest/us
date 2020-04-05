@@ -34,7 +34,7 @@ const config = (env = {}, args) => {
 
     output: {
       path: path.resolve(__dirname, 'dist'),
-      // filename: 'index.js',
+      filename: '[hash:6].js',
       // publicPath: '/assets/',
     },
   
@@ -48,6 +48,7 @@ const config = (env = {}, args) => {
       extensions: ['.ts', '.tsx', '.js'],
   
       alias: {
+        '@': path.resolve(__dirname, 'src')
       },
     },
 
@@ -88,7 +89,8 @@ const config = (env = {}, args) => {
             {
               loader: 'url-loader',
               options: {
-                limit: 8192
+                name: '[name][hash:6].[ext]',
+                limit: 8192,
               }
             }
           ]
@@ -103,7 +105,8 @@ const config = (env = {}, args) => {
               // loader: 'file-loader',
               loader: 'url-loader',
               options: {
-                limit: 8192
+                name: '[name][hash:6].[ext]',
+                limit: 8192,
               }
             }
           ]

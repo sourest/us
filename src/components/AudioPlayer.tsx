@@ -1,6 +1,8 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useRef, useState, useEffect, useCallback, memo, forwardRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { layoutZIndex } from '../constants'
+
+const noop = () => {}
 
 const Wrap = styled.div<{ canPlay: boolean }>(({ canPlay }) => ({
   position: 'fixed',
@@ -32,7 +34,7 @@ const Icon = styled.svg.attrs({
   viewBox: '0 0 1024 1024',
   version: '1.1',
   xmlns: 'http://www.w3.org/2000/svg',
-  children: <path d="M512 128v450.133333A170.666667 170.666667 0 1 0 597.333333 725.333333V298.666667h170.666667V128z" />
+  children: <path d="M512 128v450.133333A170.666667 170.666667 0 1 0 597.333333 725.333333V298.666667h170.666667V128z" />,
 })<{ playing: boolean }>(({ playing }) => ({
   animation: `${rotateKeyframes.getName()} 2s linear infinite`,
   width: '100%',
@@ -44,16 +46,36 @@ type AudioPlayerProps = {
   isUserTouched?: boolean
   autoPlay?: boolean
   loop?: boolean
+  onCanPlay?: () => void
 }
 const AudioPlayer = ({
   audios = [],
   isUserTouched,
-  autoPlay,
-  loop
-}: AudioPlayerProps) => {
+  autoPlay = true,
+  loop = true,
+  onCanPlay = noop
+}: AudioPlayerProps, ref) => {
   const [isCanPlay, setIsCanPlay] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>()
+
+  if (ref) {
+    ref.current = {
+      isCanPlay,
+      isPlaying,
+      audioRef,
+      play () {
+        if (audioRef.current) {
+          audioRef.current.play()
+        }
+      },
+      pause () {
+        if (audioRef.current) {
+          audioRef.current.pause()
+        }
+      }
+    }
+  }
 
   if (typeof audios === 'string') {
     audios = [audios]
@@ -70,7 +92,10 @@ const AudioPlayer = ({
     }
   }
 
-  const onCanPlay = () => setIsCanPlay(true)
+  const onCanPlayLocal = () => {
+    setIsCanPlay(true)
+    onCanPlay()
+  }
   const onPlay = () => setIsPlaying(true)
   const onPause = () => setIsPlaying(false)
 
@@ -98,16 +123,16 @@ const AudioPlayer = ({
     return () => {
       removeEvents()
     }
-  }, [])
+  }, [isUserTouched])
 
   return (
-    <Wrap onClick={onTap} canPlay={isCanPlay}>
+    <Wrap className="no-tap-highlight" onClick={onTap} canPlay={isCanPlay}>
       <audio
         hidden
         ref={audioRef}
-        loop={loop}
         autoPlay={autoPlay}
-        onCanPlay={onCanPlay}
+        loop={loop}
+        onCanPlay={onCanPlayLocal}
         onPlaying={onPlay}
         onPause={onPause}
       >
@@ -123,4 +148,4 @@ const AudioPlayer = ({
   )
 }
 
-export default AudioPlayer
+export default memo(forwardRef(AudioPlayer))

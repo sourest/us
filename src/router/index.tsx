@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter, Route } from 'react-router-dom'
+import { HashRouter, Route, Switch as Routes } from 'react-router-dom'
 import styled from 'styled-components'
 import Menu from '../components/Menu'
 import Home from '../containers/Home'
@@ -23,8 +23,10 @@ const router = (
   <Wrap>
     <HashRouter>
       <Menu menus={menus} />
-      <Route path="/" component={Home} />
-      <Route path="/album-typewriter" component={AlbumTypewriter} />
+      <Routes>
+        <Route path="/" exact component={Home} />
+        <Route path="/album-typewriter" component={AlbumTypewriter} />
+      </Routes>
     </HashRouter>
   </Wrap>
 )
