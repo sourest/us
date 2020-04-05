@@ -13,7 +13,7 @@ const Wrap = styled.div<{ canPlay: boolean }>(({ canPlay }) => ({
   height: 40,
   borderRadius: 40,
   overflow: 'hidden',
-  boxShadow: '0 0 5px 1px rgba(0,0,0,0.3)',
+  boxShadow: '0 0 5px 1px rgba(255,0,255,0.3)',
   cursor: 'pointer',
   display: 'flex',
   transition: '1s',
@@ -34,7 +34,7 @@ const Icon = styled.svg.attrs({
   viewBox: '0 0 1024 1024',
   version: '1.1',
   xmlns: 'http://www.w3.org/2000/svg',
-  children: <path d="M512 128v450.133333A170.666667 170.666667 0 1 0 597.333333 725.333333V298.666667h170.666667V128z" />,
+  children: <path d="M512 128v450.133333A170.666667 170.666667 0 1 0 597.333333 725.333333V298.666667h170.666667V128z" fill="#FF1493" />,
 })<{ playing: boolean }>(({ playing }) => ({
   animation: `${rotateKeyframes.getName()} 2s linear infinite`,
   width: '100%',

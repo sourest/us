@@ -69,6 +69,7 @@ const Center = styled.div({
   boxSizing: 'border-box',
   borderRadius: 5,
   padding: 5,
+  boxShadow: '0 1px 10px 0 rgba(0,0,0,0.4)',
   '&::after': {
     content: '""',
     display: 'inline-block',
@@ -199,12 +200,13 @@ const Stage = ({ onStart, images }: StageProps) => {
     setTimeout(() => {
       if (article !== text) {
         setArticle(article + (article ? text[article.length] : text[0]))
-        articleRef.current.scrollTo({ 
-          top: articleRef.current.scrollHeight, 
+        const articleElement = articleRef.current
+        articleElement.scrollTo({ 
+          top: articleElement.scrollHeight, 
           behavior: 'smooth' 
-      });
+        });
       }
-    }, 30)
+    }, 200)
   }, [article])
 
   const onTapDoor = () => {
@@ -224,7 +226,7 @@ const Stage = ({ onStart, images }: StageProps) => {
         }
       </Photos>
       <Center ref={articleRef}>{article}</Center>
-      <Door open={!!times} onTouchStart={onTapDoor}>
+      <Door open={!!times} onClick={onTapDoor}>
         {'我的女神\n女神节快乐哟'}
       </Door>
     </Wrap>
