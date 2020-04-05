@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from 'react'
+import React, { memo, useState, useEffect, useRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { layoutZIndex } from '../../../src/constants'
 import i92 from '../../assets/images/92.jpg'
@@ -111,6 +111,7 @@ const Stage = ({ onStart, images }: StageProps) => {
   const [times, setTimes] = useState(0)
   const [photos, setPhotos] = useState([])
   const [article, setArticle] = useState('')
+  const articleRef = useRef<HTMLDivElement>()
 
   const initPhotos = () => {
     const { innerWidth: stageWidth, innerHeight: stageHeight } = window
@@ -198,8 +199,12 @@ const Stage = ({ onStart, images }: StageProps) => {
     setTimeout(() => {
       if (article !== text) {
         setArticle(article + (article ? text[article.length] : text[0]))
+        articleRef.current.scrollTo({ 
+          top: articleRef.current.scrollHeight, 
+          behavior: 'smooth' 
+      });
       }
-    }, 300)
+    }, 30)
   }, [article])
 
   const onTapDoor = () => {
@@ -218,7 +223,7 @@ const Stage = ({ onStart, images }: StageProps) => {
           ))
         }
       </Photos>
-      <Center>{article}</Center>
+      <Center ref={articleRef}>{article}</Center>
       <Door open={!!times} onTouchStart={onTapDoor}>
         {'我的女神\n女神节快乐哟'}
       </Door>
