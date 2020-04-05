@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import AudioPlayer from '../../components/AudioPlayer'
-import audio from '@/assets/audios/1.mp3'
+import audio from '@/assets/audios/起风了.mp3'
 
 import i1 from '../../assets/images/1.jpg'
 import i2 from '../../assets/images/2.jpg'
