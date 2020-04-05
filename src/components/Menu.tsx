@@ -55,7 +55,8 @@ const Menu = styled(Link)({
 const MIN_PULL_LENGTH = 0
 const MAX_PULL_LENGTH = 40
 const pullLengthAverage = (MIN_PULL_LENGTH + MAX_PULL_LENGTH) / 2
-const PullingRope = styled.svg.attrs<{ moveY: number }>(({ moveY }) => ({
+type PullingRopeProps = { moveY: number }
+const PullingRope = styled.svg.attrs(({ moveY }: PullingRopeProps) => ({
   viewBox: '0 0 200 800',
   version: '1.1',
   xmlns: 'http://www.w3.org/2000/svg',
@@ -63,7 +64,7 @@ const PullingRope = styled.svg.attrs<{ moveY: number }>(({ moveY }) => ({
     transition: `${moveY ? 0 : 3e2}ms all`,
     transform: `translate3d(0,${moveY}px,0)`,
   }
-}))({
+}))<PullingRopeProps>({
   position: 'absolute',
   zIndex: 30,
   top: -MAX_PULL_LENGTH,
@@ -194,8 +195,8 @@ class Navigation extends PureComponent<NavigationProps, NavigationState> {
         <Mask visible={isNavsVisible} onClick={onTapPullingRope} />
         <Menus visible={isNavsVisible}>
           {
-            menus.map(({ path, name }) => (
-              <Menu to={path} key={path} onClick={onTapPullingRope}>
+            menus.map(({ id, path, name }) => (
+              <Menu to={path} key={id} onClick={onTapPullingRope}>
                {name}
               </Menu>
             ))
