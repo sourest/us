@@ -1,0 +1,41 @@
+version: 2.1
+jobs:
+  build-go:
+    working_directory: ~/mern-starter
+    docker:
+      - image: circleci/node:13.6.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: deploy
+          command: |
+            cd ./dist
+            git init
+            git config user.name "Kiro"
+            git config user.email "dotkiro@gmail.com"
+            git add -A
+            git commit -m "Deploy"
+            git push -f "https://${GH_TOKEN}@github.com/dotkiro/us.git" master:gh-pages
+
+workflows:
+  version: 2.1
+  just-do:
+    jobs:
+      - build-go:
+          filters:
+            branches:
+              ignore: gh-pages
+            tags:
+              ignore: /.*/
