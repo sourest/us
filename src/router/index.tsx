@@ -1,11 +1,22 @@
 import React from 'react'
 import { HashRouter, Route, Switch as Routes } from 'react-router-dom'
 import styled from 'styled-components'
+import Loadable from 'react-loadable'
 import Menu from '../components/Menu'
-import Home from '../containers/Home'
-import AlbumTypewriter from '../containers/AlbumTypewriter'
-import CubeAlbum from '../containers/CubeAlbum'
-// const Home = () => import('../containers/Home')
+
+const CubeAlbum = Loadable({
+  loader: () => import('../containers/CubeAlbum'),
+  loading: () => <div>loading</div>
+})
+const AlbumTypewriter = Loadable({
+  loader: () => import('../containers/AlbumTypewriter'),
+  loading: () => <div>loading</div>
+})
+const Home = Loadable({
+  loader: () => import('../containers/Home'),
+  loading: () => <div>loading</div>
+})
+
 
 const Wrap = styled.div({
   position: 'relative',

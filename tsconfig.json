@@ -2,7 +2,14 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "jsx": "react",
-    "typeRoots": ["."]
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "allowJs": false,
+    "importHelpers": true,
+    "paths": {
+      "@/*": [ "./src"]
+    }
   },
   "include": [
     "src/**/*"

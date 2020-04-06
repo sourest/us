@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const config = (env = {}, args) => {
+const config = (env = {}) => {
 
   const isProduction = env.production
   const ENV = isProduction ? 'production' : 'development'
@@ -117,9 +117,9 @@ const config = (env = {}, args) => {
     performance: {
       hints: 'warning',
       maxEntrypointSize: 204800,
-      // assetFilter (assetFilename) {
-      //   return !(/\.(map|css)$/.test(assetFilename))
-      // }
+      assetFilter (assetFilename) {
+        return !(/\.(map|zip|mp3|jpg|png)$/.test(assetFilename))
+      }
     },
   
     plugins: [
@@ -134,6 +134,7 @@ const config = (env = {}, args) => {
         },
         inlineSource: '.css$',
       }),
+      new webpack.BannerPlugin('/* All Rights Reserved */')
       // new HTMLInlineCSSWebpackPlugin({
       //   replace: {
       //     target: '<!-- inline_css_plugin -->'

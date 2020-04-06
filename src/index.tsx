@@ -12,7 +12,7 @@ ReactDom.render(<App store={store} />, root)
 
 document.body.appendChild(root)
 
-const onWindowTouch = () => {
+const onWindowTouch = async () => {
   store.dispatch({
     model: globalModel.MODEL_NAME,
     type: globalModel.types.SET_USER_TOUCH

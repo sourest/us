@@ -17,7 +17,7 @@ type MenuListProps = {
   visible: boolean
 }
 
-const Mask = styled.div<MenuListProps>(({ visible }) => ({
+const Mask = styled.div<MenuListProps>(({ visible }: MenuListProps) => ({
   position: 'fixed',
   zIndex: 10,
   top: 0,
