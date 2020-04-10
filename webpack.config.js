@@ -1,6 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
+const BundleAnalyzer = require('webpack-bundle-analyzer')
 
 const config = (env = {}) => {
 
@@ -28,13 +30,19 @@ const config = (env = {}) => {
       hot: true,
       noInfo: true,
       port: 8000,
+      http2: true,
+      open: true,
+      useLocalIp: true,
+      openPage: '/'
     },
 
-    entry: './src/index.tsx',
+    entry: {
+      app: './src/index.tsx'
+    },
 
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[hash:6].js',
+      filename: '[name].[hash:6].js',
       // publicPath: '/assets/',
     },
   
@@ -125,22 +133,39 @@ const config = (env = {}) => {
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
-        filename:'index.html',
-        template:'./src/index.html',
-        inject:'body',
-        minify:{
+        filename: 'index.html',
+        template: './src/index.html',
+        inject: true,
+        minify: {
           removeComments: true,
           collapseWhitespace: true
         },
-        inlineSource: '.css$',
       }),
-      new webpack.BannerPlugin('/* All Rights Reserved */')
-      // new HTMLInlineCSSWebpackPlugin({
-      //   replace: {
-      //     target: '<!-- inline_css_plugin -->'
-      //   }
-      // })
+      new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/^runtime/]),
+      new webpack.BannerPlugin('All Rights Reserved'),
+      new BundleAnalyzer.BundleAnalyzerPlugin()
     ],
+
+    optimization: {
+      runtimeChunk: true,
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            name: 'vendor',
+            test: /[\\/]node_modules[\\/]/,
+            chunks: 'all',
+            maxSize: 204800,
+            priority: 10
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            maxSize: 204800,
+            reuseExistingChunk: true
+          }
+        }
+      }
+    }
   }
 }
 
